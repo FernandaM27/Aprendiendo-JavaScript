@@ -1,9 +1,18 @@
 class Persona{
+
+    // ATRIBUTOS ESTATICOS
+    // atributo que se asocia con la clase y no con los objetos
+    static contObjetosPersona = 0; // atributo de la clase
+
+    email = 'Valor default email'; // atributo de nuestros objetos
+
     // consutrctor
     constructor( nombre, apellido ){
         // crear variables y asignarles valores de inicio
         this._nombre = nombre;
         this._apellido = apellido;
+        Persona.contObjetosPersona++;
+        console.log( 'Se incrementa contador: '+ Persona.contObjetosPersona );
     }
 
     // GETS Y SETS
@@ -35,6 +44,14 @@ class Persona{
         return this.nombreComleto()
     }
 
+    // METODOS STATICOS
+    static saludar(){
+        console.log('Saludos desde metodo static');
+    }
+
+    static saludar2(persona){
+        console.log(persona.nombre + ' ' + persona.apellido);
+    }
 }
 
 class Empleado extends Persona{
@@ -59,7 +76,6 @@ class Empleado extends Persona{
         return super.nombreComleto() + ', ' +  this._departamento; 
     }
 
-    
 }
 
 let p1 = new Persona('Fernanda', 'Miranda');
@@ -74,3 +90,28 @@ console.log( e1.nombreComleto() );
 
 console.log( e1.toString() ); // se llama el metodo de la clase hija
 console.log( p1.toString() ); // se llama el metodo de la clase padre
+
+
+// no es posible llamar un metodo estatico desde un
+// console.log(p1.saludar());
+// pero si desde una clase ya que el metodo statico se asocia a una Clase y no a un objeto
+Persona.saludar();
+Persona.saludar2( p1 );
+
+// si se puede heredar un metodo statico
+Empleado.saludar();
+Empleado.saludar2( e1 );
+
+
+// utilizar atributos staticos de la clase Persona
+console.log( p1.contObjetosPersona );
+console.log( Persona.contObjetosPersona );
+// las clases hijas tambien heredan atributos staticos
+console.log( Empleado.contObjetosPersona );
+
+// aceder a atributo de los objetos
+console.log( p1.email );
+console.log( e1.email );
+console.log( Persona.email ); // es una nueva variable estatico que se esta creando
+console.log( Empleado.email ); // es una nueva variable estatico que se esta creando
+
